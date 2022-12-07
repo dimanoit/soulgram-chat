@@ -8,7 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Soulgram.Chat.Services\Soulgram.Chat.Services.csproj"/>
+        <ProjectReference Include="..\Soulgram.Chat.FileManagement\Soulgram.Chat.FileManagement.csproj" />
+        <ProjectReference Include="..\Soulgram.Chat.Persistence\Soulgram.Chat.Persistence.csproj" />
+        <ProjectReference Include="..\Soulgram.Chat.Services\Soulgram.Chat.Services.csproj" />
     </ItemGroup>
 
 </Project>

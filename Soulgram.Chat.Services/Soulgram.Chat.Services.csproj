@@ -7,12 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Soulgram.Chat.Contracts\Soulgram.Chat.Contracts.csproj"/>
-        <ProjectReference Include="..\Soulgram.Chat.Persistence.Ports\Soulgram.Chat.Persistence.Ports.csproj"/>
+        <ProjectReference Include="..\Soulgram.Chat.Contracts\Soulgram.Chat.Contracts.csproj" />
+        <ProjectReference Include="..\Soulgram.Chat.Infrastructure.Ports\Soulgram.Chat.Infrastructure.Ports.csproj" />
+        <ProjectReference Include="..\Soulgram.Chat.Persistence.Ports\Soulgram.Chat.Persistence.Ports.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     </ItemGroup>
 
 </Project>

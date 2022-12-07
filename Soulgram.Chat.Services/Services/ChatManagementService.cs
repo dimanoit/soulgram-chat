@@ -4,7 +4,7 @@ using Soulgram.Chat.Persistence.Ports;
 using Soulgram.Chat.Services.Converters;
 using Soulgram.Chat.Services.Interfaces;
 
-namespace Soulgram.Chat.Services;
+namespace Soulgram.Chat.Services.Services;
 
 public class ChatManagementService : IChatManagementService
 {
@@ -18,6 +18,7 @@ public class ChatManagementService : IChatManagementService
     public async Task CreateChatAsync(CreateChatRequest request, CancellationToken cancellationToken)
     {
         var chatEntity = request.ToChatEntity();
+
         await _repository.InsertOneAsync(chatEntity, cancellationToken);
     }
 }
