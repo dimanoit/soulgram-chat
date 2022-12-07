@@ -32,6 +32,10 @@ public class ChatEntityMapper : IModelMapper
         BsonClassMap.RegisterClassMap<MessageEntity>(cm =>
         {
             cm.AutoMap();
+            // TODO figure out why null
+            cm.MapIdMember(messageEntity => messageEntity.Id)
+                .SetIdGenerator(new StringObjectIdGenerator())
+                .SetSerializer(new StringSerializer(BsonType.ObjectId));
 
             cm.MapMember(messageEntity => messageEntity.Text).SetIsRequired(true);
             cm.MapMember(messageEntity => messageEntity.SenderId).SetIsRequired(true);
