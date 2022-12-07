@@ -1,0 +1,71 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{0A6A3519-14E5-4A7B-9E3B-BF1B698216AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{30D9F357-C166-4EB7-8C24-117B809DC181}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{6339D98D-4DEB-4045-9336-354B589D3639}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User Interface", "User Interface", "{64754E91-590F-4ED9-A3FB-812359E01F0D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soulgram.Chat.Api", "Soulgram.Chat.Api\Soulgram.Chat.Api.csproj", "{37F96CCE-C136-4D02-A49C-C40C97731C54}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soulgram.Chat.Domain", "Soulgram.Chat.Domain\Soulgram.Chat.Domain.csproj", "{C2B157B4-BB7D-42DE-B012-A9218DE3C5BA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soulgram.Chat.Contracts", "Soulgram.Chat.Contracts\Soulgram.Chat.Contracts.csproj", "{23CEFB3F-75B2-4C68-B60C-082BF0D6F487}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soulgram.Chat.Services", "Soulgram.Chat.Services\Soulgram.Chat.Services.csproj", "{7860F382-56ED-48A6-ADB5-F2A88E1E0444}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Soulgram.Chat.Persistence.Mongo", "Soulgram.Chat.Persistence.Mongo\Soulgram.Chat.Persistence.Mongo.csproj", "{E8F2D42E-B34E-4F5E-BA5E-CDF370AE8A26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Soulgram.Chat.Persistence.Ports", "Soulgram.Chat.Persistence.Ports\Soulgram.Chat.Persistence.Ports.csproj", "{0E3B6CF6-1311-4571-999C-62BBE3554268}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37F96CCE-C136-4D02-A49C-C40C97731C54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37F96CCE-C136-4D02-A49C-C40C97731C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37F96CCE-C136-4D02-A49C-C40C97731C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37F96CCE-C136-4D02-A49C-C40C97731C54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2B157B4-BB7D-42DE-B012-A9218DE3C5BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2B157B4-BB7D-42DE-B012-A9218DE3C5BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2B157B4-BB7D-42DE-B012-A9218DE3C5BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2B157B4-BB7D-42DE-B012-A9218DE3C5BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23CEFB3F-75B2-4C68-B60C-082BF0D6F487}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23CEFB3F-75B2-4C68-B60C-082BF0D6F487}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23CEFB3F-75B2-4C68-B60C-082BF0D6F487}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23CEFB3F-75B2-4C68-B60C-082BF0D6F487}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7860F382-56ED-48A6-ADB5-F2A88E1E0444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7860F382-56ED-48A6-ADB5-F2A88E1E0444}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7860F382-56ED-48A6-ADB5-F2A88E1E0444}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7860F382-56ED-48A6-ADB5-F2A88E1E0444}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8F2D42E-B34E-4F5E-BA5E-CDF370AE8A26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8F2D42E-B34E-4F5E-BA5E-CDF370AE8A26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8F2D42E-B34E-4F5E-BA5E-CDF370AE8A26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8F2D42E-B34E-4F5E-BA5E-CDF370AE8A26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E3B6CF6-1311-4571-999C-62BBE3554268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E3B6CF6-1311-4571-999C-62BBE3554268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E3B6CF6-1311-4571-999C-62BBE3554268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E3B6CF6-1311-4571-999C-62BBE3554268}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{37F96CCE-C136-4D02-A49C-C40C97731C54} = {64754E91-590F-4ED9-A3FB-812359E01F0D}
+		{C2B157B4-BB7D-42DE-B012-A9218DE3C5BA} = {30D9F357-C166-4EB7-8C24-117B809DC181}
+		{23CEFB3F-75B2-4C68-B60C-082BF0D6F487} = {30D9F357-C166-4EB7-8C24-117B809DC181}
+		{7860F382-56ED-48A6-ADB5-F2A88E1E0444} = {0A6A3519-14E5-4A7B-9E3B-BF1B698216AD}
+		{E8F2D42E-B34E-4F5E-BA5E-CDF370AE8A26} = {6339D98D-4DEB-4045-9336-354B589D3639}
+		{0E3B6CF6-1311-4571-999C-62BBE3554268} = {0A6A3519-14E5-4A7B-9E3B-BF1B698216AD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {73C17C6D-E419-42D1-939F-B7AC48223A30}
+	EndGlobalSection
+EndGlobal
