@@ -16,6 +16,6 @@ public interface IRepository<TEntity> where TEntity : class
 
     Task InsertOneAsync(TEntity document, CancellationToken cancellationToken = default);
     Task InsertManyAsync(ICollection<TEntity> documents, CancellationToken cancellationToken = default);
-    Task DeleteOneAsync(Expression<Func<TEntity, bool>> filterExpression);
+    Task DeleteOneAsync(Expression<Func<TEntity, bool>> filterExpression, CancellationToken cancellationToken);
     Task DeleteManyAsync(Expression<Func<TEntity, bool>> filterExpression);
 }

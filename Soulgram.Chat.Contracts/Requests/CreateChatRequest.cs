@@ -1,6 +1,6 @@
 ﻿using Soulgram.Chat.Domain.Enums;
 
-namespace Soulgram.Chat.Contracts;
+namespace Soulgram.Chat.Contracts.Requests;
 
 public record CreateChatRequest
 {

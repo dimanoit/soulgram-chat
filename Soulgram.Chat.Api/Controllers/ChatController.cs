@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Soulgram.Chat.Contracts;
+﻿using FluentValidation;
+using LanguageExt.Common;
+using Microsoft.AspNetCore.Mvc;
+using Soulgram.Chat.Contracts.Requests;
 using Soulgram.Chat.Services.Interfaces;
 
 namespace Soulgram.Chat.Api.Controllers;
@@ -15,8 +17,27 @@ public class ChatController : ControllerBase
     }
 
     [HttpPost]
-    public async Task CreateChatAsync([FromBody] CreateChatRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateChatAsync([FromBody] CreateChatRequest request,
+        CancellationToken cancellationToken)
     {
-        await _service.CreateChatAsync(request, cancellationToken);
+        var result = await _service.CreateChatAsync(request, cancellationToken);
+        return GetHandledResult(result);
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteChatAsync([FromBody] DeleteChatRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await _service.DeleteChatAsync(request, cancellationToken);
+        return GetHandledResult(result);
+    }
+
+    private IActionResult GetHandledResult(Result<bool> result)
+    {
+        return result.Match<IActionResult>(
+            _ => Ok(),
+            exception => exception is ValidationException validationException
+                ? BadRequest(validationException.Errors)
+                : StatusCode(StatusCodes.Status500InternalServerError));
     }
 }

@@ -1,4 +1,5 @@
-﻿using Soulgram.Chat.Persistence.Ports;
+﻿using System.Linq.Expressions;
+using Soulgram.Chat.Persistence.Ports;
 using Soulgram.Mongo.Repository;
 using Soulgram.Mongo.Repository.Interfaces;
 
@@ -10,5 +11,11 @@ public class GenericRepository<TDocument> : MongoRepository<TDocument>,
     public GenericRepository(IMongoConnection connection)
         : base(connection)
     {
+    }
+
+    public async Task DeleteOneAsync(Expression<Func<TDocument, bool>> filterExpression,
+        CancellationToken cancellationToken)
+    {
+        await base.DeleteOneAsync(filterExpression);
     }
 }

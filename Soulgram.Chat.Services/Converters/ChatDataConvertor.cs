@@ -1,4 +1,4 @@
-﻿using Soulgram.Chat.Contracts;
+﻿using Soulgram.Chat.Contracts.Requests;
 using Soulgram.Chat.Domain.Entities;
 using Soulgram.Chat.Domain.Enums;
 
