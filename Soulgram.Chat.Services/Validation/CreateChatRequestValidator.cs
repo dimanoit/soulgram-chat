@@ -28,11 +28,18 @@ public class CreateChatRequestValidator : AbstractValidator<CreateChatRequest>
             .WithMessage($"Title should be not empty for {ChatType.Channel} or {ChatType.Group}");
 
         RuleFor(r => r.ParticipantsIds)
+            .Must(x => x == null)
+            .When(r => r.ChatType == ChatType.Channel)
+            .WithMessage("Channel can't be created with participants");
+
+        RuleFor(r => r.ParticipantsIds)
             .Must(CustomValidatorRules.IsArrayHasDuplicates)
+            .When(r => r.ChatType != ChatType.Channel)
             .WithMessage("Each participant should have a own unique id");
 
         RuleFor(r => r.ParticipantsIds)
             .Must(x => x.All(CustomValidatorRules.IsGuid))
+            .When(r => r.ChatType != ChatType.Channel)
             .WithMessage("Each participant should have a guid id");
 
         RuleFor(r => r)
@@ -50,7 +57,7 @@ public class CreateChatRequestValidator : AbstractValidator<CreateChatRequest>
         if (chatType != ChatType.Dialog) return true;
 
         var dialogId = await _repository.FindOneAsync(
-            chatEntity => chatEntity.AdminsIds.Contains(initiatorId),
+            chatEntity => chatEntity.ChatType == ChatType.Dialog && chatEntity.AdminsIds.Contains(initiatorId),
             chatEntity => chatEntity.Id,
             cancellationToken);
 

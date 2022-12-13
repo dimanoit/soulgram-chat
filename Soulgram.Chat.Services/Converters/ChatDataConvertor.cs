@@ -19,6 +19,7 @@ public static class ChatDataConvertor
             case ChatType.Channel:
             case ChatType.Group:
                 chatEntity.AdminsIds = new[] { request.InitiatorId };
+                chatEntity.Title = request.Title;
                 break;
 
             case ChatType.Dialog:

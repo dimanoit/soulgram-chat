@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using Soulgram.Chat.Contracts.Requests;
 using Soulgram.Chat.Domain.Entities;
-using Soulgram.Chat.Domain.Enums;
 using Soulgram.Chat.Persistence.Ports;
 using Soulgram.Chat.Services.Validation.CustomValidators;
 
@@ -27,11 +26,11 @@ public class DeleteChatRequestValidator : AbstractValidator<DeleteChatRequest>
 
         RuleFor(r => r)
             .MustAsync(async (r, cancellation) =>
-                await IsUserAdminOfDialog(r.UserId, r.ChatId, cancellation))
+                await IsUserAdminOfChat(r.UserId, r.ChatId, cancellation))
             .WithMessage("User don't have permission to delete this chat");
     }
 
-    private async Task<bool> IsUserAdminOfDialog(
+    private async Task<bool> IsUserAdminOfChat(
         string userId,
         string chatId,
         CancellationToken cancellationToken)
@@ -40,14 +39,10 @@ public class DeleteChatRequestValidator : AbstractValidator<DeleteChatRequest>
             chatEntity => chatEntity.Id == chatId,
             chatEntity => new
             {
-                chatEntity.AdminsIds,
-                chatEntity.ChatType
+                chatEntity.AdminsIds
             },
             cancellationToken);
 
-        if (chat == null) return false;
-
-        return chat.ChatType == ChatType.Dialog &&
-               chat.AdminsIds.Contains(userId);
+        return chat != null && chat.AdminsIds.Contains(userId);
     }
 }
