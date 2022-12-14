@@ -7,7 +7,7 @@ using Soulgram.Chat.Services.Interfaces;
 namespace Soulgram.Chat.Api.Controllers;
 
 [Route("api/chat")]
-public class ChatController : ControllerBase
+public class ChatController : EnrichedApiController
 {
     private readonly IChatManagementService _service;
 
@@ -30,14 +30,5 @@ public class ChatController : ControllerBase
     {
         var result = await _service.DeleteChatAsync(request, cancellationToken);
         return GetHandledResult(result);
-    }
-
-    private IActionResult GetHandledResult(Result<bool> result)
-    {
-        return result.Match<IActionResult>(
-            _ => Ok(),
-            exception => exception is ValidationException validationException
-                ? BadRequest(validationException.Errors)
-                : StatusCode(StatusCodes.Status500InternalServerError));
     }
 }

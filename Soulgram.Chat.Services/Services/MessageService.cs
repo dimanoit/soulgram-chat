@@ -1,4 +1,6 @@
-﻿using Soulgram.Chat.Contracts.Requests;
+﻿using FluentValidation;
+using LanguageExt.Common;
+using Soulgram.Chat.Contracts.Requests;
 using Soulgram.Chat.Domain.Entities;
 using Soulgram.Chat.Domain.Models;
 using Soulgram.Chat.Infrastructure.Ports;
@@ -11,16 +13,28 @@ public class MessageService : IMessageService
 {
     private readonly IChatFileManager _fileManager;
     private readonly IChatRepository _repository;
+    private readonly IValidator<CreateMessageRequestDto> _validator;
 
-    public MessageService(IChatFileManager fileManager, IChatRepository repository)
+    public MessageService(
+        IChatFileManager fileManager, 
+        IChatRepository repository,
+        IValidator<CreateMessageRequestDto> validator)
     {
         _fileManager = fileManager;
         _repository = repository;
+        _validator = validator;
     }
 
-    public async Task SendMessageAsync(CreateMessageRequestDto requestDto, CancellationToken cancellationToken)
+    public async Task<Result<bool>> SendMessageAsync(CreateMessageRequestDto requestDto, CancellationToken cancellationToken)
     {
-        var attachments = requestDto.Files?.Any() == false
+        var validationResult = await _validator.ValidateAsync(requestDto, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var validationException = new ValidationException(validationResult.Errors);
+            return new Result<bool>(validationException);
+        }
+        
+        var attachments = requestDto.Files == null || requestDto.Files.Length() == 0
             ? Array.Empty<AttachmentEntity>()
             : await UploadFilesAndGetEntitiesAsync(requestDto);
 
@@ -32,6 +46,7 @@ public class MessageService : IMessageService
         };
 
         await _repository.AddMessage(requestDto.ChatId, messageEntity);
+        return true;
     }
 
     private async Task<AttachmentEntity[]> UploadFilesAndGetEntitiesAsync(CreateMessageRequestDto requestDto)

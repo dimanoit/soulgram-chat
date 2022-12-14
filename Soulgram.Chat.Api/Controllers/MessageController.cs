@@ -5,7 +5,7 @@ using Soulgram.Chat.Services.Interfaces;
 namespace Soulgram.Chat.Api.Controllers;
 
 [Route("api/message")]
-public class MessageController : ControllerBase
+public class MessageController : EnrichedApiController
 {
     private readonly IMessageService _service;
 
@@ -15,10 +15,12 @@ public class MessageController : ControllerBase
     }
 
     [HttpPost]
-    public async Task CreateMessage([FromForm] CreateMessageRequest request,
+    public async Task<IActionResult> CreateMessage([FromForm] CreateMessageRequest request,
         CancellationToken cancellationToken)
     {
         var requestDto = request.ToCreateMessageRequestDto();
-        await _service.SendMessageAsync(requestDto, cancellationToken);
+        var result = await _service.SendMessageAsync(requestDto, cancellationToken);
+
+        return GetHandledResult(result);
     }
 }

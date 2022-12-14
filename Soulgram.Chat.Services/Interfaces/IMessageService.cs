@@ -1,8 +1,9 @@
-﻿using Soulgram.Chat.Contracts.Requests;
+﻿using LanguageExt.Common;
+using Soulgram.Chat.Contracts.Requests;
 
 namespace Soulgram.Chat.Services.Interfaces;
 
 public interface IMessageService
 {
-    Task SendMessageAsync(CreateMessageRequestDto requestDto, CancellationToken cancellationToken);
+    Task<Result<bool>> SendMessageAsync(CreateMessageRequestDto requestDto, CancellationToken cancellationToken);
 }
