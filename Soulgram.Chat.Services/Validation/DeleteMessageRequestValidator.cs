@@ -37,6 +37,6 @@ public class DeleteMessageRequestValidator : AbstractValidator<DeleteMessageRequ
             request.MessageId,
             cancellationToken);
 
-        return message.SenderId == request.UserId;
+        return message?.SenderId == request.UserId;
     }
 }

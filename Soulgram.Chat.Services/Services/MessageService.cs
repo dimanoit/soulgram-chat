@@ -70,13 +70,7 @@ public class MessageService : IMessageService
             request.MessageId,
             cancellationToken);
 
-        if (message.SenderId != request.UserId)
-        {
-            var validationException = new ValidationException("User can delete only own messages");
-            return new Result<bool>(validationException);
-        }
-
-        if (message.Attachments != null && message.Attachments.Any())
+        if (message?.Attachments != null && message.Attachments.Any())
             foreach (var attachment in message.Attachments)
                 await _fileManager.DeleteFileAsync(attachment.ResourceLink);
 

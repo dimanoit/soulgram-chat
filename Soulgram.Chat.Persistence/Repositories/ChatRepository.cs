@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.Extensions.Caching.Memory;
+using MongoDB.Driver;
 using Soulgram.Chat.Domain.Entities;
 using Soulgram.Chat.Infrastructure.Ports;
 using Soulgram.Mongo.Repository.Interfaces;
@@ -7,9 +8,15 @@ namespace Soulgram.Chat.Persistence.Repositories;
 
 public class ChatRepository : GenericRepository<ChatEntity>, IChatRepository
 {
-    public ChatRepository(IMongoConnection connection)
+    private const int DefaultCacheSeconds = 2;
+    private readonly IMemoryCache _memoryCache;
+
+    public ChatRepository(
+        IMongoConnection connection,
+        IMemoryCache memoryCache)
         : base(connection)
     {
+        _memoryCache = memoryCache;
     }
 
     public async Task AddMessageAsync(string chatId, MessageEntity message)
@@ -30,19 +37,21 @@ public class ChatRepository : GenericRepository<ChatEntity>, IChatRepository
         await Collection.FindOneAndUpdateAsync(g => g.Id == chatId, update);
     }
 
-    public async Task<MessageEntity> GetMessageAsync(
+    public async Task<MessageEntity?> GetMessageAsync(
         string chatId,
         string messageId,
         CancellationToken cancellationToken)
     {
-        // _cache.TryGetValue(message)
+        var value = await _memoryCache.GetOrCreateAsync(chatId + messageId, async entry =>
+        {
+            entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(DefaultCacheSeconds);
+            return await FindOneAsync(
+                c => c.Id == chatId,
+                c => c.Messages.FirstOrDefault(m => m.Id == messageId),
+                cancellationToken
+            );
+        });
 
-        var message = await FindOneAsync(
-            c => c.Id == chatId,
-            c => c.Messages.First(m => m.Id == messageId),
-            cancellationToken
-        );
-
-        return message!;
+        return value;
     }
 }

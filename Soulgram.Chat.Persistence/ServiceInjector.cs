@@ -29,5 +29,7 @@ public static class ServiceInjector
         services.AddScoped<IMongoConnection, MongoConnection>();
         services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IChatRepository, ChatRepository>();
+
+        services.AddMemoryCache();
     }
 }
