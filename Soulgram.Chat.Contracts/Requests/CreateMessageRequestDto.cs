@@ -2,7 +2,7 @@
 
 namespace Soulgram.Chat.Contracts.Requests;
 
-public class CreateMessageRequestDto
+public record CreateMessageRequestDto
 {
     public string SenderId { get; init; } = null!;
     public string ChatId { get; init; } = null!;

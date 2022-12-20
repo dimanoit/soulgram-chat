@@ -11,29 +11,35 @@ namespace Soulgram.Chat.Services.Services;
 
 public class MessageService : IMessageService
 {
+    private readonly IValidator<CreateMessageRequestDto> _createValidator;
+    private readonly IValidator<DeleteMessageRequest> _deleteValidator;
+
     private readonly IChatFileManager _fileManager;
     private readonly IChatRepository _repository;
-    private readonly IValidator<CreateMessageRequestDto> _validator;
+
 
     public MessageService(
-        IChatFileManager fileManager, 
+        IChatFileManager fileManager,
         IChatRepository repository,
-        IValidator<CreateMessageRequestDto> validator)
+        IValidator<CreateMessageRequestDto> createValidator,
+        IValidator<DeleteMessageRequest> deleteValidator)
     {
         _fileManager = fileManager;
         _repository = repository;
-        _validator = validator;
+        _createValidator = createValidator;
+        _deleteValidator = deleteValidator;
     }
 
-    public async Task<Result<bool>> SendMessageAsync(CreateMessageRequestDto requestDto, CancellationToken cancellationToken)
+    public async Task<Result<bool>> SendMessageAsync(CreateMessageRequestDto requestDto,
+        CancellationToken cancellationToken)
     {
-        var validationResult = await _validator.ValidateAsync(requestDto, cancellationToken);
+        var validationResult = await _createValidator.ValidateAsync(requestDto, cancellationToken);
         if (!validationResult.IsValid)
         {
             var validationException = new ValidationException(validationResult.Errors);
             return new Result<bool>(validationException);
         }
-        
+
         var attachments = requestDto.Files == null || requestDto.Files.Length() == 0
             ? Array.Empty<AttachmentEntity>()
             : await UploadFilesAndGetEntitiesAsync(requestDto);
@@ -45,7 +51,37 @@ public class MessageService : IMessageService
             Attachments = attachments
         };
 
-        await _repository.AddMessage(requestDto.ChatId, messageEntity);
+        await _repository.AddMessageAsync(requestDto.ChatId, messageEntity);
+        return true;
+    }
+
+    public async Task<Result<bool>> DeleteMessageAsync(DeleteMessageRequest request,
+        CancellationToken cancellationToken)
+    {
+        var validationResult = await _deleteValidator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var validationException = new ValidationException(validationResult.Errors);
+            return new Result<bool>(validationException);
+        }
+
+        var message = await _repository.GetMessageAsync(
+            request.ChatId,
+            request.MessageId,
+            cancellationToken);
+
+        if (message.SenderId != request.UserId)
+        {
+            var validationException = new ValidationException("User can delete only own messages");
+            return new Result<bool>(validationException);
+        }
+
+        if (message.Attachments != null && message.Attachments.Any())
+            foreach (var attachment in message.Attachments)
+                await _fileManager.DeleteFileAsync(attachment.ResourceLink);
+
+        await _repository.DeleteMessageAsync(request.ChatId, request.MessageId);
+
         return true;
     }
 

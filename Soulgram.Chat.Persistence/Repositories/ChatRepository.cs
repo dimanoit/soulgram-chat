@@ -12,11 +12,37 @@ public class ChatRepository : GenericRepository<ChatEntity>, IChatRepository
     {
     }
 
-    public async Task AddMessage(string chatId, MessageEntity message)
+    public async Task AddMessageAsync(string chatId, MessageEntity message)
     {
-        var update = Builders<ChatEntity>.Update
+        var update = Builders<ChatEntity>
+            .Update
             .Push(chatEntity => chatEntity.Messages, message);
 
         await Collection.FindOneAndUpdateAsync(g => g.Id == chatId, update);
+    }
+
+    public async Task DeleteMessageAsync(string chatId, string messageId)
+    {
+        var update = Builders<ChatEntity>
+            .Update
+            .PullFilter(chat => chat.Messages, message => message.Id == messageId);
+
+        await Collection.FindOneAndUpdateAsync(g => g.Id == chatId, update);
+    }
+
+    public async Task<MessageEntity> GetMessageAsync(
+        string chatId,
+        string messageId,
+        CancellationToken cancellationToken)
+    {
+        // _cache.TryGetValue(message)
+
+        var message = await FindOneAsync(
+            c => c.Id == chatId,
+            c => c.Messages.First(m => m.Id == messageId),
+            cancellationToken
+        );
+
+        return message!;
     }
 }
