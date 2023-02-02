@@ -6,7 +6,7 @@ public interface IChatRepository
 {
     Task AddMessageAsync(string chatId, MessageEntity message);
     Task DeleteMessageAsync(string chatId, string messageId);
-    Task SetAdminList(string chatId, string[] adminsIds);
+    Task SetAdminListAsync(string chatId, string[] adminsIds);
 
     Task<MessageEntity?> GetMessageAsync(
         string chatId,

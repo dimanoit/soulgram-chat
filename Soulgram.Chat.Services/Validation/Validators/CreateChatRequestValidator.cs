@@ -3,9 +3,9 @@ using Soulgram.Chat.Contracts.Requests;
 using Soulgram.Chat.Domain.Entities;
 using Soulgram.Chat.Domain.Enums;
 using Soulgram.Chat.Persistence.Ports;
-using Soulgram.Chat.Services.Validation.CustomValidators;
+using Soulgram.Chat.Services.Validation.Rules;
 
-namespace Soulgram.Chat.Services.Validation;
+namespace Soulgram.Chat.Services.Validation.Validators;
 
 public class CreateChatRequestValidator : AbstractValidator<CreateChatRequest>
 {

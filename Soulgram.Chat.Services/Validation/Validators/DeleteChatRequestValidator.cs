@@ -2,9 +2,9 @@
 using Soulgram.Chat.Contracts.Requests;
 using Soulgram.Chat.Domain.Entities;
 using Soulgram.Chat.Persistence.Ports;
-using Soulgram.Chat.Services.Validation.CustomValidators;
+using Soulgram.Chat.Services.Validation.Rules;
 
-namespace Soulgram.Chat.Services.Validation;
+namespace Soulgram.Chat.Services.Validation.Validators;
 
 public class DeleteChatRequestValidator : AbstractValidator<DeleteChatRequest>
 {

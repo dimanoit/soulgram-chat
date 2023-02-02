@@ -4,7 +4,7 @@ using Soulgram.Chat.Domain.Entities;
 using Soulgram.Chat.Domain.Enums;
 using Soulgram.Chat.Persistence.Ports;
 
-namespace Soulgram.Chat.Services.Validation;
+namespace Soulgram.Chat.Services.Validation.Validators;
 
 public class CreateMessageRequestDtoValidator : AbstractValidator<CreateMessageRequestDto>
 {
@@ -44,15 +44,9 @@ public class CreateMessageRequestDtoValidator : AbstractValidator<CreateMessageR
                 chatEntity.ChatType
             }, cancellationToken);
 
-        if (chat?.ChatType is ChatType.Dialog or ChatType.Group)
-        {
-            return chat.ParticipantsIds.Contains(userId);
-        }
+        if (chat?.ChatType is ChatType.Dialog or ChatType.Group) return chat.ParticipantsIds.Contains(userId);
 
-        if (chat?.ChatType == ChatType.Channel)
-        {
-            return chat.AdminsIds.Contains(userId);
-        }
+        if (chat?.ChatType == ChatType.Channel) return chat.AdminsIds.Contains(userId);
 
         return true;
     }

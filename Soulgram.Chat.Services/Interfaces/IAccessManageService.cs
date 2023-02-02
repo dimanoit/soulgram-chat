@@ -1,8 +1,9 @@
-﻿using Soulgram.Chat.Contracts.Requests;
+﻿using LanguageExt.Common;
+using Soulgram.Chat.Contracts.Requests;
 
 namespace Soulgram.Chat.Services.Interfaces;
 
 public interface IAccessManageService
 {
-    Task UpdateAdminsInGroup(UpdateGroupAdminsRequest request);
+    Task<Result<bool>> UpdateAdminsInGroup(UpdateGroupAdminsRequest request);
 }

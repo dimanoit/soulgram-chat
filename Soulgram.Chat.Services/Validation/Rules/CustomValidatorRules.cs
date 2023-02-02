@@ -1,4 +1,4 @@
-﻿namespace Soulgram.Chat.Services.Validation.CustomValidators;
+﻿namespace Soulgram.Chat.Services.Validation.Rules;
 
 public static class CustomValidatorRules
 {

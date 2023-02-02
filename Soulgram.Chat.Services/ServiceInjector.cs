@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using Soulgram.Chat.Services.Validation;
+using Soulgram.Chat.Services.Validation.Validators;
 
 namespace Soulgram.Chat.Services;
 

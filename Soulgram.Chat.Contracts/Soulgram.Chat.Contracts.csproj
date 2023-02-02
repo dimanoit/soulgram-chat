@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Soulgram.Chat.Domain\Soulgram.Chat.Domain.csproj" />
+        <ProjectReference Include="..\Soulgram.Chat.Domain\Soulgram.Chat.Domain.csproj"/>
     </ItemGroup>
 
 </Project>
