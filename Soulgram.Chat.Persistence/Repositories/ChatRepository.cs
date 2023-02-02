@@ -28,6 +28,15 @@ public class ChatRepository : GenericRepository<ChatEntity>, IChatRepository
         await Collection.FindOneAndUpdateAsync(g => g.Id == chatId, update);
     }
 
+    public async Task SetAdminList(string chatId, string[] adminsIds)
+    {
+        var update = Builders<ChatEntity>
+            .Update
+            .Set(ce => ce.AdminsIds, adminsIds);
+
+        await Collection.FindOneAndUpdateAsync(g => g.Id == chatId, update);
+    }
+
     public async Task DeleteMessageAsync(string chatId, string messageId)
     {
         var update = Builders<ChatEntity>
