@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using Soulgram.Chat.Contracts.Requests;
 using Soulgram.Chat.Infrastructure.Ports;
-using Soulgram.Chat.Services.Validation.CustomValidators;
+using Soulgram.Chat.Services.Validation.Rules;
 
-namespace Soulgram.Chat.Services.Validation;
+namespace Soulgram.Chat.Services.Validation.Validators;
 
 public class DeleteMessageRequestValidator : AbstractValidator<DeleteMessageRequest>
 {

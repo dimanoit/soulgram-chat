@@ -5,6 +5,7 @@ using Soulgram.Chat.Domain.Entities;
 using Soulgram.Chat.Persistence.Ports;
 using Soulgram.Chat.Services.Converters;
 using Soulgram.Chat.Services.Interfaces;
+using Soulgram.Chat.Services.Validation.Extensions;
 
 namespace Soulgram.Chat.Services.Services;
 
@@ -26,12 +27,8 @@ public class ChatManagementService : IChatManagementService
 
     public async Task<Result<bool>> CreateChatAsync(CreateChatRequest request, CancellationToken cancellationToken)
     {
-        var validationResult = await _createValidator.ValidateAsync(request, cancellationToken);
-        if (!validationResult.IsValid)
-        {
-            var validationException = new ValidationException(validationResult.Errors);
-            return new Result<bool>(validationException);
-        }
+        var result = await _createValidator.ValidateWithResultAsync(request, cancellationToken);
+        if (!result.IsSuccess) return result;
 
         var chatEntity = request.ToChatEntity();
 
@@ -41,12 +38,8 @@ public class ChatManagementService : IChatManagementService
 
     public async Task<Result<bool>> DeleteChatAsync(DeleteChatRequest request, CancellationToken cancellationToken)
     {
-        var validationResult = await _deleteValidator.ValidateAsync(request, cancellationToken);
-        if (!validationResult.IsValid)
-        {
-            var validationException = new ValidationException(validationResult.Errors);
-            return new Result<bool>(validationException);
-        }
+        var result = await _deleteValidator.ValidateWithResultAsync(request, cancellationToken);
+        if (!result.IsSuccess) return result;
 
         await _repository.DeleteOneAsync(
             x => x.Id == request.ChatId,

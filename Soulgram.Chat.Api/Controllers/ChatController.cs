@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-using LanguageExt.Common;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Soulgram.Chat.Contracts.Requests;
 using Soulgram.Chat.Services.Interfaces;
 
